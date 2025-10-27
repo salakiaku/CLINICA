@@ -8,17 +8,8 @@ namespace CLINICA.APPLICATION.DTOS.Analysis.Responses
 {
     public class GetAllAnalysisResponseDTO
     {
-        public int AnalysisId { get; set; }
+        public int Id { get; set; }
         public string? Name { get; set; }
         public string? State { get; set; }
-        public DateTime AuditCreatedDate { get; set; }
-    }
-
-    public class GetByIdAnalysisResponseDTO
-    {
-        public int AnalysisId { get; set; }
-        public string? Name { get; set; }
-        public string? State { get; set; }
-        public DateTime AuditCreatedDate { get; set; }
     }
 }

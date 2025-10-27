@@ -1,7 +1,10 @@
 
-using Microsoft.OpenApi.Models;
 using CLINICA.APPLICATION.USECASES.Extensions;
 using CLINICA.INFRASTRUTURE.PERSISTENCES.Extensions;
+using CLINICA.PRESENTATION.API.Extensions;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +23,12 @@ builder.Services.AddSwaggerGen(c =>
 // Add services to the container.
 
 builder.Services.AddControllers();
+   
+
 
 builder.Services.AddApplication();
 builder.Services.AddInfraPersistence();
+
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -44,6 +50,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+//Middleware que criei para validação
+app.AddMiddleware();
 
 
 

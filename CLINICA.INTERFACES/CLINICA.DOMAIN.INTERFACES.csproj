@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CLINICA.DOMAIN\CLINICA.DOMAIN.csproj" />
+    <ProjectReference Include="..\CLINICA.DTOS\CLINICA.APPLICATION.DTOS.csproj" />
   </ItemGroup>
 
 </Project>

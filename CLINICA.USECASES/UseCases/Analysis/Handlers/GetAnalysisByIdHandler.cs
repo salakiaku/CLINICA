@@ -2,22 +2,20 @@
 using CLINICA.APPLICATION.DTOS.Analysis.Responses;
 using CLINICA.APPLICATION.USECASES.Commons.Bases;
 using CLINICA.APPLICATION.USECASES.UseCases.Analysis.Queries;
-using CLINICA.Interface;
+using CLINICA.DOMAIN.Entities;
+using CLINICA.DOMAIN.INTERFACES;
+using CLINICA.UTILITIES.Constants;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static CLINICA.UTILITIES.Constants.StoredProcedures;
 
 namespace CLINICA.APPLICATION.USECASES.UseCases.Analysis.Handlers
 {
     public class GetAnalysisByIdHandler : IRequestHandler<GetAnalysisByIdQuery, BaseResponse<GetByIdAnalysisResponseDTO>>
     {
         private readonly IMapper _mapper;
-        private readonly IAnalysisRepository _analysisRepository;
+        private readonly IGenericRepository<Analysi> _analysisRepository;
 
-        public GetAnalysisByIdHandler(IMapper mapper, IAnalysisRepository analysisRepository)
+        public GetAnalysisByIdHandler(IMapper mapper, IGenericRepository<Analysi> analysisRepository)
         {
             _mapper = mapper;
             _analysisRepository = analysisRepository;
@@ -29,18 +27,21 @@ namespace CLINICA.APPLICATION.USECASES.UseCases.Analysis.Handlers
 
             try
             {
-                var domain = await _analysisRepository.GetAnalysisByIdAsync(request.Id);
+                var domain = await _analysisRepository.GetByIdAsync(STP.STPAnalysisGetById, new { id = request.AnalysisId});
 
                 if (domain is null)
                 {
                     response.IsSuccess = false;
-                    response.Message = "Nenhum registro encontrado!";
+                    response.Message = GlobalMessages.GetNotFound;
 
                 }
-
-                response.IsSuccess = true;
-                response.Data = _mapper.Map<GetByIdAnalysisResponseDTO>(domain);
-                response.Message = "Consulta realizada com sucesso!";
+                else
+                {
+                    response.IsSuccess = true;
+                    response.Data = _mapper.Map<GetByIdAnalysisResponseDTO>(domain);
+                    response.Message = GlobalMessages.GetSuccess;
+                }
+                    
             }
             catch (Exception ex)
             {

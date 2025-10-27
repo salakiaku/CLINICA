@@ -11,6 +11,6 @@ namespace CLINICA.APPLICATION.USECASES.UseCases.Analysis.Queries
 {
     public class GetAnalysisByIdQuery : IRequest<BaseResponse<GetByIdAnalysisResponseDTO>>
     {
-        public int Id { get; set; }
+        public int AnalysisId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CLINICA.APPLICATION.DTOS.Analysis.Requests;
 using CLINICA.APPLICATION.DTOS.Analysis.Responses;
 using CLINICA.DOMAIN.Entities;
 using System;
@@ -14,10 +15,15 @@ namespace CLINICA.APPLICATION.USECASES.Mappings
         
         public AnalysisMappingProfile()
         {
-            CreateMap<Analysis, GetAllAnalysisResponseDTO>()
+            CreateMap<Analysi, GetAllAnalysisResponseDTO>()
                 .ForMember(dest => dest.State, option => option.MapFrom(src => src.State == 1 ? "Activo" : "Inactivo"));
 
-            CreateMap<Analysis, GetByIdAnalysisResponseDTO>()
+            CreateMap<CreateAnalysisRequestDTO, Analysi>();
+            CreateMap<UpdateAnalysisRequestDTO, Analysi>();
+
+
+
+            CreateMap<Analysi, GetByIdAnalysisResponseDTO>()
                .ForMember(dest => dest.State, option => option.MapFrom(src => src.State == 1 ? "Activo" : "Inactivo"));
 
         }

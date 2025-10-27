@@ -20,7 +20,9 @@ namespace CLINICA.INFRASTRUTURE.PERSISTENCES.Context
             _connectionString = configuration.GetConnectionString("Clinica")!;
         }
 
-        public IDbConnection CreateConnection => new MySqlConnection(_connectionString);
+        public IDbConnection CreateConnection()
+        {
+            return new MySqlConnection(_connectionString); 
+        }
     }
 }
-    

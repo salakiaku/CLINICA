@@ -1,12 +1,9 @@
-﻿using CLINICA.INFRASTRUTURE.PERSISTENCES.Context;
+﻿using CLINICA.DOMAIN.INTERFACES;
+using CLINICA.INFRASTRUTURE.PERSISTENCES.Context;
+using CLINICA.INFRASTRUTURE.PERSISTENCES.Context.Config;
 using CLINICA.INFRASTRUTURE.PERSISTENCES.Repositories;
-using CLINICA.Interface;
+using Dapper;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CLINICA.INFRASTRUTURE.PERSISTENCES.Extensions
 {
@@ -15,11 +12,16 @@ namespace CLINICA.INFRASTRUTURE.PERSISTENCES.Extensions
 
         public static IServiceCollection AddInfraPersistence(this  IServiceCollection services)
         {
+            SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());//para converter 
             services.AddScoped<ApplicationDbContext>();
 
             #region Repositories
 
-            services.AddScoped<IAnalysisRepository, AnalysisRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IExamsRepository, ExamsRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IMedicRepository, MedicRepository>();
             #endregion
             return services;
         }
